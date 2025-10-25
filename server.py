@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
 import logging
 from bot import send_application
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)  # Разрешаем CORS для frontend
 
 # Настройки
@@ -122,6 +122,18 @@ def test():
         'status': 'ok',
         'message': 'Сервер работает'
     })
+
+
+@app.route('/')
+def index():
+    """Отдача главной страницы"""
+    return send_from_directory('.', 'index.html')
+
+
+@app.errorhandler(404)
+def fallback(e):
+    """Обработчик 404 для SPA - отдаем index.html"""
+    return send_from_directory('.', 'index.html'), 200
 
 
 if __name__ == '__main__':
