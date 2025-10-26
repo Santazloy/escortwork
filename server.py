@@ -39,15 +39,14 @@ def submit_application():
         # Получаем данные формы
         data = {
             'name': request.form.get('name'),
+            'age': request.form.get('age'),
             'height': request.form.get('height'),
             'weight': request.form.get('weight'),
             'citizenship': request.form.get('citizenship'),
-            'phone': request.form.get('phone'),
             'telegram': request.form.get('telegram'),
             'whatsapp': request.form.get('whatsapp'),
             'experience': request.form.get('experience'),
-            'countries': request.form.get('countries'),
-            'about': request.form.get('about')
+            'countries': request.form.get('countries')
         }
 
         logger.info(f"Получена анкета от: {data.get('name')}")
