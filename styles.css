@@ -322,6 +322,22 @@ body {
   animation: borderGlow 4s linear infinite;
 }
 
+.card.touch-active {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(74, 124, 126, 0.1);
+}
+
+.card.touch-active::before {
+  opacity: 1;
+}
+
+.card.touch-active::after {
+  opacity: 0.3;
+  animation: borderGlow 4s linear infinite;
+}
+
 @keyframes borderGlow {
   from { transform: rotate(0); }
   to { transform: rotate(360deg); }
@@ -404,7 +420,7 @@ body {
 }
 
 .form-group {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: relative;
 }
 
