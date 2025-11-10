@@ -23,9 +23,9 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")  # Используем того же бот�
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
-# ID групп
-GROUP_RU = -1002774266933  # Русская группа
-GROUP_ZH = -1002468561827  # Китайская группа
+# ID групп (читаем из ENV, с fallback на дефолтные значения)
+GROUP_RU = int(os.getenv("GROUP_RU_ID", "-1002774266933"))  # Русская группа
+GROUP_ZH = int(os.getenv("GROUP_ZH_ID", "-1002468561827"))  # Китайская группа
 
 # Инициализация Supabase клиента
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)

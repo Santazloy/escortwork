@@ -1,23 +1,28 @@
 #!/bin/bash
-
-# Production startup script для Render
-# Запускает веб-сервер и balance bot одновременно
+set -euo pipefail
 
 echo "🚀 Starting Escortwork Production Services..."
 
-# Запускаем balance bot в фоне
+# ===== конфиг =====
+WORKERS=${WORKERS:-2}
+TIMEOUT=${TIMEOUT:-120}
+BIND_ADDR="0.0.0.0:${PORT:-10000}"
+
+# Логи
+mkdir -p logs
+BOT_LOG="logs/balance_bot.log"
+WEB_LOG="logs/web.log"
+
+# Аккуратное завершение
+terminate() {
+  echo "🛑 Stopping services..."
+  pkill -P $$ || true
+  exit 0
+}
+trap terminate SIGTERM SIGINT
+
 echo "📊 Starting Balance Bot..."
-python3 balance_bot.py &
-BALANCE_BOT_PID=$!
-echo "✅ Balance bot started with PID: $BALANCE_BOT_PID"
+python3 balance_bot.py >>"$BOT_LOG" 2>&1 &
 
-# Небольшая пауза для инициализации бота
-sleep 2
-
-# Запускаем веб-сервер (он будет на переднем плане)
-echo "🌐 Starting Web Server..."
-gunicorn server:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
-
-# Если веб-сервер упал, останавливаем balance bot
-echo "⚠️ Web server stopped, stopping balance bot..."
-kill $BALANCE_BOT_PID 2>/dev/null
+echo "🌐 Starting Web Server: gunicorn server:app --bind $BIND_ADDR --workers $WORKERS --timeout $TIMEOUT"
+exec gunicorn server:app --bind "$BIND_ADDR" --workers "$WORKERS" --timeout "$TIMEOUT" >>"$WEB_LOG" 2>&1
