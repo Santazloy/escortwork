@@ -7,6 +7,25 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- SVG Filters for Liquid Glass Effect -->
+  <svg style="display: none">
+    <filter id="liquid-glass" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="3" seed="5" result="noise" />
+      <feGaussianBlur in="noise" stdDeviation="1" result="blur" />
+      <feDisplacementMap in="SourceGraphic" in2="blur" scale="35" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <filter id="card-glass" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="10" result="noise" />
+      <feGaussianBlur in="noise" stdDeviation="0.5" result="blur" />
+      <feDisplacementMap in="SourceGraphic" in2="blur" scale="20" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <filter id="form-glass" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="15" result="noise" />
+      <feGaussianBlur in="noise" stdDeviation="0.8" result="blur" />
+      <feDisplacementMap in="SourceGraphic" in2="blur" scale="25" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
   <!-- Background Elements -->
   <div class="liquid-bg">
     <div class="liquid-gradient"></div>
@@ -26,26 +45,31 @@
 
     <div class="cards-grid">
       <div class="card" onclick="showSection('conditions')">
+        <div class="card-glow"></div>
         <div class="card-icon">✦</div>
         <h2>Условия</h2>
         <p>Премиальные условия сотрудничества</p>
       </div>
       <div class="card" onclick="showSection('rules')">
+        <div class="card-glow"></div>
         <div class="card-icon">◈</div>
         <h2>Правила</h2>
         <p>Стандарты excellence</p>
       </div>
       <div class="card" onclick="showSection('info')">
+        <div class="card-glow"></div>
         <div class="card-icon">❋</div>
         <h2>Информация</h2>
         <p>О нашем агентстве</p>
       </div>
       <div class="card" onclick="showSection('reviews')">
+        <div class="card-glow"></div>
         <div class="card-icon">✧</div>
         <h2>Отзывы</h2>
         <p>Истории успеха</p>
       </div>
       <div class="card" onclick="showSection('recommendations')">
+        <div class="card-glow"></div>
         <div class="card-icon">◉</div>
         <h2>Рекомендации</h2>
         <p>Путь к вершине</p>

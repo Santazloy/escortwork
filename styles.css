@@ -31,10 +31,21 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-primary);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  background: url(https://raw.githubusercontent.com/lucasromerodb/liquid-glass-effect-macos/refs/heads/main/assets/flowers.jpg) center center;
+  background-size: 400px;
+  animation: moveBackground 1620s linear infinite;
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% -1000%;
+  }
 }
 
 /* Liquid Glass Background */
@@ -57,7 +68,7 @@ body {
     radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 60% 40%, rgba(0, 217, 255, 0.05) 0%, transparent 60%);
   filter: blur(60px);
-  animation: liquidFlow 20s ease-in-out infinite;
+  animation: liquidFlow 1620s ease-in-out infinite;
 }
 
 @keyframes liquidFlow {
@@ -66,67 +77,9 @@ body {
   66% { transform: rotate(240deg) scale(0.95) translate(10%, -10%); }
 }
 
-/* Glass Orbs */
+/* Glass Orbs - hidden */
 .glass-orb {
-  position: fixed;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 30%,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.02) 40%,
-      transparent 70%);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  z-index: 2;
-}
-
-.glass-orb::before {
-  content: "";
-  position: absolute;
-  inset: 20%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 70% 70%, transparent, rgba(255, 255, 255, 0.05));
-  filter: blur(15px);
-}
-
-.orb1 {
-  width: 350px;
-  height: 350px;
-  top: 10%;
-  left: -5%;
-  animation: floatOrb1 25s infinite ease-in-out;
-}
-
-.orb2 {
-  width: 450px;
-  height: 450px;
-  bottom: -10%;
-  right: -5%;
-  animation: floatOrb2 30s infinite ease-in-out;
-}
-
-.orb3 {
-  width: 280px;
-  height: 280px;
-  top: 50%;
-  left: 60%;
-  animation: floatOrb3 20s infinite ease-in-out;
-}
-
-@keyframes floatOrb1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(100px, -50px) scale(1.1); }
-}
-
-@keyframes floatOrb2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-80px, -100px) scale(0.9); }
-}
-
-@keyframes floatOrb3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-50px, 80px) scale(1.15); }
+  display: none;
 }
 
 /* Noise Texture */
@@ -260,7 +213,7 @@ body {
   -webkit-backdrop-filter: blur(30px) saturate(120%);
   border-radius: 24px;
   padding: 40px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -278,7 +231,7 @@ body {
   inset: 0;
   background: radial-gradient(
     circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    var(--glass-hover) 0%,
+    rgba(255, 255, 255, 0.15) 0%,
     transparent 50%
   );
   opacity: 0;
@@ -288,16 +241,16 @@ body {
 .card::after {
   content: "";
   position: absolute;
-  inset: -2px;
+  inset: -1px;
   border-radius: 24px;
-  padding: 2px;
+  padding: 1px;
   background: linear-gradient(
     45deg,
-    var(--accent-glow),
-    transparent,
-    var(--accent-purple),
-    transparent,
-    var(--accent-pink)
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.8)
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -308,9 +261,11 @@ body {
 
 .card:hover {
   transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.4);
   box-shadow:
     0 30px 60px rgba(0, 0, 0, 0.6),
-    0 0 40px rgba(74, 124, 126, 0.1);
+    0 0 25px rgba(255, 255, 255, 0.15),
+    0 0 50px rgba(255, 255, 255, 0.08);
 }
 
 .card:hover::before {
@@ -318,15 +273,16 @@ body {
 }
 
 .card:hover::after {
-  opacity: 0.3;
-  animation: borderGlow 4s linear infinite;
+  opacity: 0.6;
 }
 
 .card.touch-active {
   transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.4);
   box-shadow:
     0 30px 60px rgba(0, 0, 0, 0.6),
-    0 0 40px rgba(74, 124, 126, 0.1);
+    0 0 25px rgba(255, 255, 255, 0.15),
+    0 0 50px rgba(255, 255, 255, 0.08);
 }
 
 .card.touch-active::before {
@@ -334,13 +290,12 @@ body {
 }
 
 .card.touch-active::after {
-  opacity: 0.3;
-  animation: borderGlow 4s linear infinite;
+  opacity: 0.6;
 }
 
-@keyframes borderGlow {
-  from { transform: rotate(0); }
-  to { transform: rotate(360deg); }
+/* Card glow element (for compatibility) */
+.card-glow {
+  display: none;
 }
 
 .card-icon {
