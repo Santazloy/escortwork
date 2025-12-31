@@ -47,11 +47,19 @@ CREATE TRIGGER update_group_balances_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
--- Инициализация балансов для двух групп
+-- Инициализация балансов для трёх групп
+-- ВАЖНО: Замените ID на реальные ID ваших Telegram групп
+-- Получить ID группы можно добавив бота @userinfobot в группу
+--
+-- Группы по умолчанию:
+--   GROUP_RU_ID:         -1002774266933  (Русская группа Shanghai)
+--   GROUP_ZH_ID:         -1002468561827  (Китайская группа Shanghai)
+--   GROUP_ZH_BEIJING_ID: -1003698590476  (Китайская группа Beijing)
 INSERT INTO group_balances (group_id, group_name, current_balance, language)
 VALUES
-    (-1002774266933, 'Русская группа', 0.00, 'ru'),
-    (-1002468561827, '中文群组', 0.00, 'zh')
+    (-1002774266933, 'Русская группа (Shanghai)', 0.00, 'ru'),
+    (-1002468561827, '上海中文群组', 0.00, 'zh'),
+    (-1003698590476, '北京中文群组', 0.00, 'zh')
 ON CONFLICT (group_id) DO NOTHING;
 
 -- Комментарии к таблицам
